@@ -20,6 +20,10 @@ class BlankFragment : Fragment() {
     ): View? {
 
         _binding = DataBindingUtil.inflate(layoutInflater,R.layout.fragment_blank,container,false)
+
+        if(savedInstanceState!=null){
+            binding?.motionlayout?.transitionState = savedInstanceState.getBundle("key")
+        }
         // Inflate the layout for this fragment
         return binding?.root
     }
@@ -33,6 +37,11 @@ class BlankFragment : Fragment() {
         binding?.recyclerView?.adapter = ItemAdapter(requireContext(),myDataset)
 
         binding?.recyclerView?.setHasFixedSize(true)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBundle("key",binding?.motionlayout?.transitionState)
     }
 
     override fun onDestroy() {
